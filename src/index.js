@@ -12,6 +12,7 @@ function createServer(db) {
   app.use(bodyParser.json())
 
   app.get('/v1/tasks', (req, res) => {
+    // validacao aqui
     taskRepository
       .findAll()
       .then((data) => {
