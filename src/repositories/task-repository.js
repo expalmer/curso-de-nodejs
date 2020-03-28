@@ -1,14 +1,18 @@
-import { getId } from '../libs/utils'
-
 const createRepository = (db) => {
   const findAll = () => db.all('SELECT * FROM tasks ORDER BY id')
 
-  // TODO: tratar
-  const findOne = (id) => db.get('SELECT * FROM tasks WHERE id = ? ', id)
+  // TODO: tratar - Fiz baseado ali no update que tu já tinha feito!
+  const findOne = (id) =>
+    db.get('SELECT * FROM tasks WHERE id = ? ', id).then((data) => {
+      if (!data) {
+        throw new Error('não existe')
+      }
+      return data;
+    })
 
   // TODO: retornar
   const store = ({ task, done }) =>
-    db.run(`INSERT INTO tasks (id, task, done) VALUES (?, ?, ?)`, [getId(), task, done])
+    db.run(`INSERT INTO tasks (task, done) VALUES (?, ?)`, [task, done])
 
   const update = (id, { task, done }) =>
     db.get(`SELECT * FROM tasks WHERE id = ?`, [id]).then((data) => {
