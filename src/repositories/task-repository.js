@@ -3,6 +3,10 @@ import { getId } from '../libs/utils'
 const createRepository = (db) => {
   const findAll = () => db.all('SELECT * FROM tasks ORDER BY id')
 
+  // TODO: tratar
+  const findOne = (id) => db.get('SELECT * FROM tasks WHERE id = ? ', id)
+
+  // TODO: retornar
   const store = ({ task, done }) =>
     db.run(`INSERT INTO tasks (id, task, done) VALUES (?, ?, ?)`, [getId(), task, done])
 
@@ -24,6 +28,7 @@ const createRepository = (db) => {
 
   return {
     findAll,
+    findOne,
     store,
     update,
     destroy,

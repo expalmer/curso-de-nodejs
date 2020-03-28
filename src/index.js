@@ -15,9 +15,24 @@ function createServer(db) {
     taskRepository
       .findAll()
       .then((data) => {
-        res.json({ data })
+        res.json(data)
       })
-      .catch((err) => res.status(500).json({ ops: err }))
+      .catch((err) => {
+        res.status(500).json({ ops: err })
+      })
+  })
+
+  app.get('/v1/tasks/:id', (req, res) => {
+    const { params } = req
+    const { id } = params
+    taskRepository
+      .findOne(id)
+      .then((data) => {
+        res.json(data)
+      })
+      .catch((err) => {
+        res.status(400).json({ err: err.message })
+      })
   })
 
   app.post('/v1/tasks', (req, res) => {
