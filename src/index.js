@@ -26,6 +26,7 @@ function createServer(db) {
   app.get('/v1/tasks/:id', (req, res) => {
     const { params } = req
     const { id } = params
+    // validacao aqui
     taskRepository
       .findOne(id)
       .then((data) => {
