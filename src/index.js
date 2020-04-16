@@ -1,5 +1,6 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import cors from 'cors'
 
 import { getConnection } from './sqlite'
 import setupTaskRepository from './repositories/task-repository'
@@ -9,6 +10,7 @@ function createServer(db) {
 
   const taskRepository = setupTaskRepository(db)
 
+  app.use(cors())
   app.use(bodyParser.json())
 
   app.get('/v1/tasks', (req, res) => {
